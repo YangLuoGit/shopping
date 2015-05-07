@@ -1,0 +1,38 @@
+<h2>Your Cart (cart id: <%= current_cart.id %>)</h2>
+
+ <%= date_select :due_date, :class => "datepicker" %>
+  
+
+
+<ul>
+<% current_cart.line_items.each do |item| %>
+  <li><%= item.qty %> x <%= item.product.name %> $ <%= item.amount %></li>
+<% end %>
+</ul>
+
+<p>
+Total: <%= current_cart.total %>
+<%= link_to "checkout" , new_order_path %>
+<%= link_to 'delete all', cart_path(), :method => :delete %>
+<%= link_to "admin" , admin_products_path %>
+</p>
+<hr>
+
+
+<% @products.each do |product| %>
+<div class="product">
+  <%= link_to product_path(product) do %>
+    <%= image_tag(product.image_url, :width => 50) %><br />
+  <% end %>
+
+  <%= product.name %><br />
+  $<%= product.price %>
+  <%= button_to "Buy", cart_path(:product_id => product) %>
+</div>
+<% end %>
+
+
+
+<div style="clear: both"></div>
+
+<%= paginate @products %>
